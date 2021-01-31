@@ -5,7 +5,6 @@ from realtors.models import Realtor
 from blogs.models import Blog
 from neighbourhoods.models import Neighbourhood
 from listings.choices import price_choices, bedroom_choices, bathroom_choices
-import random
 
 # Create your views here.
 def index(request):
@@ -31,10 +30,8 @@ def about(request):
     mvp_realtors = Realtor.objects.all().filter(is_mvp=True)
     # Random Listing
     all_listings = Listing.objects.all()
-    random_listing = random.choice(all_listings)
     context = {
         'realtors': realtors,
         'mvp_realtors': mvp_realtors,
-        'random_listing': random_listing
     }
     return render(request, 'pages/about.html', context)
