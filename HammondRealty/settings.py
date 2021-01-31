@@ -92,7 +92,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'hammonddb',
         'USER': 'postgres',
-        'PASSWORD': config('DB_PASSWORD'),
+        'PASSWORD': 'postgres123',
         'HOST': 'localhost'
     }
 }
