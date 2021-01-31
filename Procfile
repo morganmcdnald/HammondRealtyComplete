@@ -1,1 +1,1 @@
-web: gunicorn Hammon.wsgi --log-file -
+web: gunicorn HammondRealty.wsgi --log-file -
