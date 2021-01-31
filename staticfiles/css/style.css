@@ -1,0 +1,404 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@200;300;500;600;700&display=swap");
+
+img {
+  width: 100%;
+}
+
+.logo {
+  width: 90px;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.navbar {
+  text-transform: uppercase;
+}
+
+.social a:link {
+  margin-right: 0.4rem;
+}
+
+.social a:hover {
+  color: #56b3df;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+#showcase {
+  background: linear-gradient(0deg, #005b859a, #005b859a),
+    url(../img/showcase.jpg) no-repeat top center;
+  background-size: cover;
+  position: relative;
+  min-height: 650px;
+  color: #fff;
+  padding-top: 6rem;
+}
+#showcase .home-search {
+  min-height: 400px;
+  position: relative;
+  border-radius: 5px;
+}
+#showcase .overlay {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-height: 400px;
+  width: 100%;
+  background: #2893c500;
+}
+
+@media screen and (max-width: 767px) {
+  #showcase,
+  #showcase .overlay {
+    min-height: 100vh;
+  }
+
+  #showcase .home-search {
+    min-height: 100vh;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .p-5 {
+    padding-top: 3rem !important;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  #showcase,
+  #showcase .overlay {
+    min-height: 130vh;
+  }
+
+  #showcase .home-search {
+    min-height: 130vh;
+  }
+}
+
+#services {
+  background: url(../img/pier.jpg) no-repeat center fixed;
+  background-size: auto;
+  position: relative;
+  overflow: hidden;
+}
+#services::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-height: 100%;
+  width: 100%;
+  background: #239ad1d5;
+}
+
+#showcase-inner {
+  background: url(../img/street.jpg) no-repeat top center fixed;
+  background-size: 100vw;
+  position: relative;
+  overflow: hidden;
+  min-height: 200px;
+}
+#showcase-inner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-height: 100%;
+  width: 100%;
+  background: rgba(32, 117, 157, 0.7);
+}
+#showcase-inner.showcase-search {
+  min-height: 270px;
+}
+
+#work {
+  padding: 6rem 0;
+  background: url(../img/stats.jpg) no-repeat center fixed;
+  background-size: auto;
+  position: relative;
+  overflow: hidden;
+}
+#work::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-height: 100%;
+  width: 100%;
+  background: #272727d0;
+}
+
+.listing-preview a {
+  position: relative;
+}
+
+.nav-right {
+  padding-left: 1.5rem;
+}
+
+.bg-login {
+  background-color: #fcf26b !important;
+  color: #333;
+}
+
+.bg-login h4 {
+  padding-top: .5rem;
+}
+
+.nav-left {
+  padding-left: 1.5rem;
+}
+
+@media (max-width: 991px) {
+  #showcase {
+    padding-top: 4rem;
+  }
+  #showcase h1 {
+    font-size: 40px;
+  }
+  .hide-md-down {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  #showcase {
+    padding-top: 3rem;
+  }
+  #showcase h1 {
+    font-size: 40px;
+  }
+  #showcase p {
+    display: none;
+  }
+  #top-bar {
+    text-align: center;
+  }
+  #top-bar .social {
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 576px) {
+  #showcase h1 {
+    font-size: 30px;
+  }
+  #showcase-inner h1 {
+    font-size: 40px;
+  }
+}
+
+@media screen and (min-width: 1950px) {
+  #showcase {
+    background-size: 100vw;
+    background-position: center;
+  }
+}
+
+@media screen and (min-width: 1350px) {
+  #services {
+    background-size: 100vw;
+    background-position: bottom;
+  }
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: #56b3df !important;
+}
+
+.reviews .slick-prev:before,
+.reviews .slick-next:before {
+  color: #fcf26b !important;
+}
+
+.test-text {
+  color: #fff !important;
+  z-index: 100;
+}
+
+.blog-heading {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.viewing {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  justify-content: space-between;
+  position: relative;
+}
+
+.viewing-sub {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 auto;
+  position: relative;
+  height: auto;
+  padding: 10px; 
+}
+
+.viewing-sub a {
+  color: #fff;
+}
+
+.viewing-sub a:hover {
+  border: none;
+}
+
+.visit-btn {
+  border: 4px solid white;
+  background-color: #ffffff00;
+  color: #fff !important;
+  border-radius: 15px;
+  padding: .5rem 2.5rem .5rem 2.5rem;
+  font-size: 1.5rem;
+  transition: all .3s;
+}
+
+.icons {
+  line-height: .7rem;
+}
+
+.smaller-heading {
+  font-size: 1.2rem;
+  color: rgba(140, 140, 140, 1);
+}
+
+.text-left-right {
+  text-align: right;
+  position: relative;
+}
+.left-text {
+  left: 0;
+  position: absolute;
+}
+.byline {
+  font-size: 2rem;
+  color: rgba(140, 140, 140, 1);
+}
+
+.desc-header {
+  font-size: 1.5rem;
+}
+
+.neighbourhoodBtn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all .3s;
+}
+
+.neighbourhoodBtn:hover {
+  transform: scale(1.1);
+}
+
+.visit-btn:hover {
+  transform: scale();
+}
+
+.card-body-nhood button {
+  outline: none;
+}
+
+.blog-info {
+  color: black !important;
+}
+
+#contact-form textarea {
+  resize: none;
+}
+
+@media screen and (max-width: 768px) {
+  .contact-pic, .about-pic {
+    display: none;
+  }
+}
+
+#about-services i {
+  font-size: 4rem;
+  padding-bottom: .75rem;
+  color: #fcf26b;
+  text-shadow: 3px 2px 4px rgba(0,0,0,0.3);
+}
+
+#about-services p {
+  color: #acacac;
+}
+
+.service-item {
+  transition: all .3s;
+  top: 0;;
+}
+
+.service-item:hover {
+  top: -10px;
+  transform: scale(1.02);
+}
+
+.realtor-info p {
+  line-height: .5rem;
+}
+
+.team-heading {
+  margin-bottom: .5rem;
+}
+
+.realtor-mvp span {
+  font-size: 1rem;
+}
+
+.realtor-mvp i {
+  color: #fcf26b;
+  text-shadow: 2px 1px 1px rgba(0,0,0,0.3);
+  line-height: 0rem;
+}
+
+.realtor-photo {
+  transition: all .3s;
+}
+
+.realtor-photo:hover {
+  transform: scale(1.03);
+}
+
+.link-images a {
+  color: white;
+}
+
+.link-images {
+  padding-top: .5rem !important;
+}
+
+@media screen and (min-width: 991px) {
+  .listing-title-smaller {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .listing-title-desktop {
+    display: none;
+  }
+}
+
+.dashboard-page, .login-page, .register-page {
+  min-height: 100vh;
+}
+
+@media screen and (max-width: 768px) {
+  .thumbs {
+    display: none !important;
+  }
+}
+
+.blog-info {
+  padding-bottom: 0 !important;
+  margin-bottom: -15px !important;
+}
+
