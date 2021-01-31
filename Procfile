@@ -1,3 +1,1 @@
-Procfile
--------------------------------
-web: gunicorn HammondRealty.wsgi
+web: gunicorn Hammon.wsgi --log-file -
