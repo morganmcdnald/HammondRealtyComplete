@@ -149,7 +149,6 @@
         {% endfor %} {% else %}
         <div class="col-md-12">
           <p>No Comments Yet.</p>
-          <hr>
         </div>
         {% endif %}
       </div>
@@ -157,10 +156,9 @@
         <div class="col-md-12">
           <hr>
           <br>
-          {% csrf_token %} {% if user.is_authenticated %}
-          <p>Leave a comment:</p>
           <form action="{% url 'comment' %}" method="POST">
-            
+            {% csrf_token %} {% if user.is_authenticated %}
+            <p>Leave a comment:</p>
             <input type="hidden" name="user_id" value="{{ user.id }}" />
             <input type="hidden" name="username" value="{{ user.username }}" />
             
@@ -175,10 +173,10 @@
               value="Post Comment"
               class="btn btn-block btn-secondary"
             />
-          </form>
-          {% else %}
+            {% else %}
           <p>Login to leave a comment.</p>
           {% endif %}
+          </form>
         </div>
       </div>
     </div>
