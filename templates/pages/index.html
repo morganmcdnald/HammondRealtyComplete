@@ -1,0 +1,354 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load static %}
+{% block title %} | Welcome {% endblock %} 
+
+{% block content %}
+<!-- Showcase -->
+<section id="showcase">
+  <!-- Alerts -->
+  {% include 'partials/_alerts.html' %}
+  <div class="container text-center">
+    <div class="home-search p-5">
+      <div class="overlay p-5">
+        <h1 class="display-4 mb-4">
+          <strong>Santa Clarita's Best Husband/Wife Realty Team</strong>
+        </h1>
+        <p class="lead">
+          <strong>Begin your search for your dream property right here!</strong>
+        </p>
+        <br />
+        <div class="search">
+          <form action="{% url 'search' %}">
+            <!-- Form Row 1 -->
+            <div class="form-row">
+              <div class="col-md-12 mb-3">
+                <label class="sr-only">Keywords</label>
+                <input
+                  type="text"
+                  name="keywords"
+                  class="form-control"
+                  placeholder="Keyword (Pool, Deck, etc), Address or Zipcode"
+                />
+              </div>
+            </div>
+            <!-- Form Row 2 -->
+            <div class="form-row">
+              <div class="col-md-6 mb-3">
+                <label class="sr-only">Neighbourhood</label>
+                <input type="text" name="neighbourhood" class="form-control" placeholder="Neighbourhood">
+              </div>
+
+              <div class="col-md-3 mb-3">
+                <select name="minprice" class="form-control" id="type">
+                  <option selected="true" disabled="disabled">
+                    Min Price (Any)
+                  </option>
+                  {% for key,value in price_choices.items %}
+                  <option value="{{ key }}">{{ value }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="col-md-3 mb-3">
+                <select name="price" class="form-control" id="type">
+                  <option selected="true" disabled="disabled">
+                    Max Price (Any)
+                  </option>
+                  {% for key,value in price_choices.items %}
+                  <option value="{{ key }}">{{ value }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <!-- Form Row 3 -->
+            <div class="form-row">
+              <div class="col-md-3 mb-3">
+                <label class="sr-only">Bedrooms</label>
+                <select name="minbedrooms" class="form-control">
+                  <option selected="true" disabled="disabled">
+                    Min Bedrooms (Any)
+                  </option>
+                  {% for key,value in bedroom_choices.items %}
+                  <option value="{{ key }}">{{ value }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              
+              <div class="col-md-3 mb-3">
+                <label class="sr-only">Bedrooms</label>
+                <select name="bedrooms" class="form-control">
+                  <option selected="true" disabled="disabled">
+                    Max Bedrooms (Any)
+                  </option>
+                  {% for key,value in bedroom_choices.items %}
+                  <option value="{{ key }}">{{ value }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="col-md-3 mb-3">
+                <select name="minbathrooms" class="form-control" id="type">
+                  <option selected="true" disabled="disabled">
+                    Min Bathrooms (Any)
+                  </option>
+                  {% for key,value in bathroom_choices.items %}
+                  <option value="{{ key }}">{{ value }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="col-md-3 mb-3">
+                <select name="bathrooms" class="form-control" id="type">
+                  <option selected="true" disabled="disabled">
+                    Max Bathrooms (Any)
+                  </option>
+                  {% for key,value in bathroom_choices.items %}
+                  <option value="{{ key }}">{{ value }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <button class="btn btn-secondary btn-block mt-4" type="submit">
+              Submit Search
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Listings -->
+<section id="listings" class="py-5">
+  <div class="container">
+    <h3 class="text-center mb-3">Featured Listings</h3>
+    <div class="row">
+      {% if featured_listings %} {% for listing in featured_listings %}
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card listing-preview">
+          <img class="card-img-top" src="{{ listing.photo_main.url }}" alt="" />
+          <div class="card-body">
+            <div class="listing-heading">
+              <h3><strong>${{ listing.price | intcomma }}</strong></h3>
+              <h4 class="text-primary">{{ listing.title }}</h4>
+              <p>
+                {{ listing.neighbourhood }}, {{ listing.city }}, {{ listing.state }}, {{ listing.zipcode }}
+              </p>
+              <p class="icons"><i class="fas fa-bed"></i> {{ listing.bedrooms }}&nbsp;&nbsp;<i class="fas fa-bath"></i> {{ listing.bathrooms }}</p>
+            </div>
+            <a href="{% url 'listing' listing.id %}" class="btn btn-secondary btn-block">View Listing</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %} {% else %}
+      <div class="col-md-12">
+        <p>No Listings Available</p>
+      </div>
+      {% endif %}
+    </div>
+
+    <br />
+
+    <!-- Latest Listings -->
+    <h3 class="text-center mb-3">Latest Listings</h3>
+    <div class="row">
+      {% if listings %}
+      {% for listing in listings %}
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card listing-preview">
+          <img class="card-img-top" src="{{ listing.photo_main.url }}" alt="" />
+          <div class="card-body">
+            <div class="listing-heading">
+              <h3><strong>${{ listing.price | intcomma }}</strong></h3>
+              <h4 class="text-primary">{{ listing.title }}</h4>
+              <p>
+                {{ listing.neighbourhood }}, {{ listing.city }}, {{ listing.state }}, {{ listing.zipcode }}
+              </p>
+              <p class="icons"><i class="fas fa-bed"></i> {{ listing.bedrooms }}&nbsp;&nbsp;<i class="fas fa-bath"></i> {{ listing.bathrooms }}</p>
+            </div>
+            <a
+              href="{% url 'listing' listing.id %}"
+              class="btn btn-secondary btn-block"
+              >View Listing</a
+            >
+          </div>
+        </div>
+      </div>
+      {% endfor %} {% else %}
+      <div class="col-md-12">
+        <p>No Listings Available</p>
+      </div>
+      {% endif %}
+    </div>
+
+    <br />
+
+    <!-- Neighbourhoods -->
+    <h3 class="text-center mb-3">Explore Neighbourhoods</h3>
+    <div class="neighbourhood-slider">
+      {% for neighbourhood in neighbourhoods %}
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card listing-preview">
+          <form action="{% url 'search' %}">
+            <img class="card-img-top" src="{{ neighbourhood.photo.url }}" alt="" />
+          <div class="card-body-nhood text-center">
+            <button class="neighbourhoodBtn" name="neighbourhood" value="{{ neighbourhood.name }}" type="submit"><h5>{{ neighbourhood.name }}</h5></button>
+          </div>
+          </form>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Book a Viewing -->
+<section id="services" class="py-5 bg-secondary text-white">
+  <div class="container">
+    <br>
+    <div class="reviews text-center">
+      <div>
+        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+        <br>
+        I've recommended the Hammond Realty Team to everyone I know. True professionals and a genuinely nice people. I realize it won't always be this easy to sell your home, but I think you'd be hard pressed to find a better team.
+        <br>
+        <em>- Adam & Hailee Price</em>
+      </div>
+
+      <div>
+        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+        <br>
+        We can't speak highly enough of our experience with Joel Hammond. We were first-time homebuyers with very little knowledge about how to find the right place. He is honest and hands-on, and he really helped to take the pressure off of us.
+        <br>
+        <em>- Ricky & Taylor Miller</em>
+      </div>
+      
+      <div>
+        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+        <br>
+        We were so fortunate to have found Sheila Hammond when we moved to Santa Clarita. She was always on our side working to make our house purchase as simple and successful as possible. We would recommend him to anyone.
+        <br>
+        <em>- Ellie & Dina Frazer</em>
+      </div>
+      
+      <div>
+        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half"></i>
+        <br>
+        From day 1, Matt Quinn was extremely responsive and had great suggestions for homes to view based on what we were looking for. If the time ever comes when we will be looking for a new home, there isn't any question on who our Realtor will be!
+        <br>
+        <em>- Nathan & Elena North</em>
+      </div>
+
+      <div>
+        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half"></i>
+        <br>
+        We are so lucky that we found the Hammond Realty Team, they made buying our first home an enjoyable and easy experience. Quick to respond and will do anything to help, we highly recommend them!
+        <br>
+        <em>- Alex & Marie Wilson</em>
+      </div>
+    </div>
+    <br>
+  </div>
+</section>
+
+<!-- Latest Blog Posts -->
+<br />
+<section id="listings" class="py-5">
+  <div class="container">
+    <h3 class="text-center mb-3">Latest Blog Posts</h3>
+    <div class="row">
+      {% if blogs %} {% for blog in blogs %}
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card listing-preview">
+          <img class="card-img-top" src="{{ blog.blog_photo.url }}" alt="" />
+          <div class="card-body">
+            <div class="listing-heading">
+              <h4 class="text-primary">{{ blog.title }}</h4>
+              <p>By {{ blog.author }}<br>Posted {{ blog.post_date | timesince }} ago</p>
+            </div>
+            <a href="{% url 'blog' blog.id %}" class="btn btn-secondary btn-block">Read Blog Post</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %} {% else %}
+      <div class="col-md-12">
+        <p>No Blog Posts Available</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- Contact Form -->
+<section id="contact-form" class="py-5">
+  <div class="container">
+    <h3 class="text-center mb-3">Contact Us</h3>
+    <p class="text-center mb-3 text-center">Interested in selling your house? Want to know more? Send us a message!</p>
+    <div class="row">
+      <div class="col-md-6 contact-pic">
+        <img src="{% static 'img/HR.jpg' %}" alt="">
+      </div>
+      <div class="col-md-6">
+        <form action="{% url 'contactform' %}" method="POST">
+          {% csrf_token %} {% if user.is_authenticated %}
+          <input type="hidden" name="user_id" value="{{ user.id }}" />
+          {% else %}
+          <input type="hidden" name="user_id" value="0" />
+          {% endif %}
+          <div class="form-group">
+            <label for="user_name">Name</label>
+            <input
+              type="text"
+              name="name"
+              class="form-control"
+              {%
+              if
+              user.is_authenticated
+              %}
+              value="{{ user.first_name }} {{ user.last_name }}"
+              {%
+              endif
+              %}
+              required
+            />
+          </div>
+    
+          <div class="form-group">
+            <label for="user_email">Email Address</label>
+            <input
+              type="email"
+              name="email"
+              class="form-control"
+              {%
+              if
+              user.is_authenticated
+              %}
+              value="{{ user.email }}"
+              {%
+              endif
+              %}
+              required
+            />
+          </div>
+    
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Subject</label>
+            <input name="subject" type="text" class="form-control" id="exampleFormControlInput1" required>
+          </div>
+    
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">Message</label>
+            <textarea name="message" class="form-control" id="exampleFormControlTextarea1" rows="5" required></textarea>
+          </div>
+          <input
+            type="submit"
+            value="Submit Form"
+            class="btn btn-block btn-secondary"
+          />
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

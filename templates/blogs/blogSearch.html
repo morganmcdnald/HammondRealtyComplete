@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block title %} | Blog Search Results {% endblock %}
+
+{% block content %}
+  <section id="showcase-inner" class="showcase-search text-white py-5">
+    <div class="container">
+        <div class="row text-center">
+          <div class="col-md-12">
+            <h1 class="display-4">Blog Search Results</h1>
+            <p class="lead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt, pariatur!</p>
+          </div>
+          <div class="col-md-12">
+              <form action="{% url 'blogSearch' %}">
+              <!-- Form Row 1 -->
+              <div class="form-row">
+                  <div class="col-md-4 mb-3">
+                  <label class="sr-only">Keywords</label>
+                  <input type="text" name="keywords" class="form-control" placeholder="Keyword (DIY, Project, etc)" value="{{ values.keywords }}">
+                  </div>
+
+                  <div class="col-md-4 mb-3">
+                    <label class="sr-only">Author</label>
+                    <select name="author" class="form-control">
+                        <option selected="true" disabled="disabled">Author (All)</option>
+                        {% for key,value in author_choices.items %}
+                          <option value="{{ key }}" {% if key == values.author %} selected {% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+
+                  <div class="col-md-4 mb-3">
+                    <label class="sr-only">Category</label>
+                    <select name="category" class="form-control">
+                        <option selected="true" disabled="disabled">Category (All)</option>
+                        {% for key,value in category_choices.items %}
+                          <option value="{{ key }}" {% if key == values.category %} selected {% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+              </div>
+              <button class="btn btn-secondary btn-block mt-4" type="submit">Submit Blog Search</button>
+              </form>
+          </div>
+        </div>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <section id="bc" class="mt-3">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+            <a href="{% url 'index' %}">
+                Home</a>
+            </li>
+            <li class="breadcrumb-item">
+            <a href="{% url 'blogs' %}">Browse Blog Posts</a>
+            </li>
+            <li class="breadcrumb-item active"> Search Results</li>
+        </ol>
+        </nav>
+    </div>
+    </section>
+
+    <!-- Listings -->
+    <section id="listings" class="py-4">
+      <div class="container">
+        <div class="row">
+          {% if blogs %}
+            {% for blog in blogs %}
+            <div class="col-md-6 col-lg-4 mb-4">
+              <div class="card listing-preview">
+                <img class="card-img-top" src="{{ blog.blog_photo.url }}" alt="">
+                <div class="card-body">
+                  <div class="listing-heading">
+                    <h4 class="text-primary">{{ blog.title }}</h4>
+                    <p>By {{ blog.author }}<br>Posted {{ blog.post_date | timesince }} ago</p>
+                  </div>
+                  <a href="{% url 'blog' blog.id %}" class="btn btn-primary btn-block">Read Blog Post</a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          {% else %}
+            <div class="col-md-12">
+              <p>No Blog Posts Available</p>
+            </div>
+          {% endif %}
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block title %} | {{ blog.title }} {% endblock %}
+
+{% block content %}
+
+  <!-- Breadcrumb -->
+  <section id="bc" class="mt-3">
+    <div class="container">
+      <!-- Alerts -->
+      {% include 'partials/_alerts.html' %} 
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'index' %}">Home</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="{% url 'blogs' %}">Blogs</a>
+          </li>
+          <li class="breadcrumb-item active">{{ blog.title }}</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- Post -->
+  <section id="listing" class="py-4">
+    <div class="container">
+      <a href="{% url 'blogs' %}" class="btn btn-light mb-4">Back To Blog Posts</a>
+      <div class="col-md-12">
+        <h1 class="display-4">{{ blog.title }} </h1>
+      </div>
+      <div class="col-md-12">
+        <h4>{{ blog.sub_title }} </h4>
+      </div>
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-md-12">
+          <!-- Home Main Image -->
+          <img src="{{ blog.blog_photo.url }}" alt="" class="img-main img-fluid mb-3">
+          <!-- Thumbnails -->
+          <div class="row mb-5 thumbs">
+            {% if blog.photo_1 %}
+            <div class="col-md-2">
+            <a href="{{ blog.photo_1.url }}" data-lightbox="home-images">
+                <img src="{{ blog.photo_1.url }}" alt="" class="img-fluid">
+            </a>
+            </div>
+            {% endif %}
+            {% if blog.photo_2 %}
+            <div class="col-md-2">
+            <a href="{{ blog.photo_2.url }}" data-lightbox="home-images">
+                <img src="{{ blog.photo_2.url }}" alt="" class="img-fluid">
+            </a>
+            </div>
+            {% endif %}
+            {% if blog.photo_3 %}
+            <div class="col-md-2">
+            <a href="{{ blog.photo_3.url }}" data-lightbox="home-images">
+                <img src="{{ blog.photo_3.url }}" alt="" class="img-fluid">
+            </a>
+            </div>
+            {% endif %}
+            {% if blog.photo_4 %}
+            <div class="col-md-2">
+            <a href="{{ blog.photo_4.url }}" data-lightbox="home-images">
+                <img src="{{ blog.photo_4.url }}" alt="" class="img-fluid">
+            </a>
+            </div>
+            {% endif %}
+            {% if blog.photo_5 %}
+            <div class="col-md-2">
+            <a href="{{ blog.photo_5.url }}" data-lightbox="home-images">
+                <img src="{{ blog.photo_5.url }}" alt="" class="img-fluid">
+            </a>
+            </div>
+            {% endif %}
+            {% if blog.photo_6 %}
+            <div class="col-md-2">
+            <a href="{{ blog.photo_6.url }}" data-lightbox="home-images">
+                <img src="{{ blog.photo_6.url }}" alt="" class="img-fluid">
+            </a>
+            </div>
+            {% endif %}
+        </div>
+          <!-- Fields -->
+          <hr>
+          <div class="row blog-info">
+              <div class="col-md-3">
+                <p>Author: {{ blog.author }}</p>
+              </div>
+              <div class="col-md-3">
+                <p>Category: {{ blog.category }}</p>
+              </div>
+              <div class="col-md-3">
+                <p>Date Posted: {{ blog.post_date }}</p>
+              </div>
+              <div class="col-md-3">
+                <form action="{% url 'favourite' %}" method="POST">
+                  {% csrf_token %} {% if user.is_authenticated %}
+                  <input type="hidden" name="user_id" value="{{ user.id }}" />
+                  <input type="hidden" name="blog_id" value="{{ blog.id }}" />
+                  <input type="hidden" name="blog" value="{{ blog.title }}" />
+                  <input type="hidden" name="username" value="{{ user.username }}" />
+            
+                  <input
+                    type="submit"
+                    value="Like Blog"
+                    class="btn btn-block btn-secondary"
+                    style="margin-top: -7px;"
+                  />
+                  {% endif %}
+                </form>
+              </div>
+          </div>
+          <hr>
+
+          <!-- Blog Content -->
+          <br>
+          <div class="row mb-5">
+            <div class="col-md-12">
+                {{ blog.content | safe | linebreaks }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <hr>
+  </div>
+
+  <section id="contact-form" class="py-5">
+    <div class="container">
+      <h3 class="mb-3">Comments</h3>
+      <div class="container">
+        {% if comments %} {% for comment in comments %}
+        <div class="row">
+          <em>By {{ comment.username }} | {{ comment.comment_date | timesince }} ago</em>
+          <br>
+          <div class="col-12">
+            {{ comment.comment }}
+          </div>
+        </div>
+        <br>
+        {% endfor %} {% else %}
+        <div class="col-md-12">
+          <p>No Comments Yet.</p>
+          <hr>
+        </div>
+        {% endif %}
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <hr>
+          <br>
+          {% csrf_token %} {% if user.is_authenticated %}
+          <p>Leave a comment:</p>
+          <form action="{% url 'comment' %}" method="POST">
+            
+            <input type="hidden" name="user_id" value="{{ user.id }}" />
+            <input type="hidden" name="username" value="{{ user.username }}" />
+            
+            <input type="hidden" name="blog_id" value="{{ blog.id }}" />
+            <input type="hidden" name="blog" value="{{ blog.title }}" />
+
+            <div class="form-group">
+              <textarea name="comment" class="form-control"></textarea>
+            </div>
+            <input
+              type="submit"
+              value="Post Comment"
+              class="btn btn-block btn-secondary"
+            />
+          </form>
+          {% else %}
+          <p>Login to leave a comment.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

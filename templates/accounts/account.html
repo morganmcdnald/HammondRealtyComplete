@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+
+{% block title %} | Dashboard {% endblock %}
+
+{% block content %}
+<div class="dashboard-page">
+  <section id="showcase-inner" class="py-5 text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h1 class="display-4"><strong>Your Account</strong></h1>
+          <p class="lead"><strong>Manage your Hammond Realty account here</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <section id="bc" class="mt-3">
+    <div class="container">
+      <!-- Alerts -->
+      {% include 'partials/_alerts.html' %} 
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'index' %}">
+              Home</a>
+          </li>
+          <li class="breadcrumb-item active"> Account</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <section id="dashboard" class="py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>Welcome {{ user.first_name }}</h2>
+          {% if contacts %}
+          <br>
+            <p>Here are the property listings that you have inquired about:</p>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Property</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for contact in contacts %}
+                  <tr>
+                    <td>{{ contact.id }}</td>
+                    <td>{{ contact.listing }}</td>
+                    <td>
+                      <a class="btn btn-light" style="float: right;" href="{% url 'listing' contact.listing_id %}">View Listing</a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% else %}
+          <br>
+            <p><strong>You have not made any inquiries yet.</strong></p>
+          {% endif %}
+          <br>
+          <br>
+          {% if likes %}
+            <p>Here are the property listings that you have added to your likes:</p>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Property</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for like in likes %}
+                  <tr>
+                    <td>{{ like.id }}</td>
+                    <td>{{ like.listing }}</td>
+                    <td>
+                      <a class="btn btn-light" style="float: right;" href="{% url 'listing' like.listing_id %}">View Listing</a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% else %}
+            <p><strong>You have not liked any properties yet.</strong></p>
+          {% endif %}
+          <br>
+          <br>
+          {% if forms %}
+            <p>Here are the contact form submissions you have made:</p>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Form</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for form in forms %}
+                  <tr>
+                    <td>{{ form.id }}</td>
+                    <td>{{ form.subject }}</td>
+                    <td>
+                      <button
+                      class="btn btn-light" style="float: right;" data-toggle="modal" data-target="#contactModal_{{form.id}}">View Submission</button>
+                    </td>
+                  </tr>
+                  <!-- Contact Modal -->
+                  <div class="modal fade" id="contactModal_{{ form.id }}" role="dialog">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="inquiryModalLabel">Your Contact Submission</h5>
+                          <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="container">
+                            <div class="row">
+                              <p>Name: {{ form.name }}</p>
+                            </div>
+                            <div class="row">
+                              <p>Email: {{ form.email }}</p>
+                            </div>
+                            <div class="row">
+                              <p>Subject: {{ form.subject }}</p>
+                            </div>
+                            <div class="row">
+                              <p>Message: {{ form.message }}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </tbody>
+            </table>  
+          {% else %}
+            <p><strong>You have not submitted any contact forms yet.</strong></p>
+          {% endif %}
+          <br>
+          <br>
+          {% if favourites %}
+            <p>Here are the blog post that you have added to your likes:</p>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Blog</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for favourite in favourites %}
+                  <tr>
+                    <td>{{ favourite.id }}</td>
+                    <td>{{ favourite.blog }}</td>
+                    <td>
+                      <a class="btn btn-light" style="float: right;" href="{% url 'blog' favourite.blog_id %}">View Blog</a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% else %}
+            <p><strong>You have not liked any blog posts yet.</strong></p>
+          {% endif %}
+          <br>
+          <br>
+          {% if comments %}
+            <p>Here are the blog posts you have left comments on:</p>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Blog</th>
+                  <th scope="col">Comment</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for comment in comments %}
+                  <tr>
+                    <td>{{ comment.id }}</td>
+                    <td>{{ comment.blog }}</td>
+                    <td>{{ comment.comment }}</td>
+                    <td>
+                      <a class="btn btn-light" style="float: right;" href="{% url 'blog' comment.blog_id %}">View Blog</a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% else %}
+            <p><strong>You have not commented on any blog posts yet.</strong></p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+{% endblock %}
