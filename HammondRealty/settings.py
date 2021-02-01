@@ -93,8 +93,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'hammonddb',
-        'USER': os.environ.get('HR_DB_USER'),
-        'PASSWORD': os.environ.get('HR_DB_PASS'),
+        'USER': os.environ.get('HR_DB_USER', 'postgres'),
+        'PASSWORD': os.environ.get('HR_DB_PASS', 'postgres123'),
         'HOST': 'localhost'
     }
 }
