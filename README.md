@@ -1,7 +1,7 @@
 # Hammond Realty
 
 Link to deployed site:
-[hammondrealty.herokuapp.com](hammondrealty.herokuapp.com)
+[hammondrealty.herokuapp.com](https://hammondrealty.herokuapp.com/)
 
 ## Description
 
